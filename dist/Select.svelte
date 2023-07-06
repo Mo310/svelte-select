@@ -11,77 +11,33 @@
   import ChevronIcon from './ChevronIcon.svelte';
   import ClearIcon from './ClearIcon.svelte';
   import LoadingIcon from './LoadingIcon.svelte';
-  import type { Optional } from '../types';
 
   export let justValue = null; // read-only
 
   export let filter = _filter;
   export let getItems = _getItems;
 
-  /** Id attr for input field */
-  export let id: Optional<string> = undefined;
-
-  /** Name attribute of hidden input, helpful for form actions */
-  export let name: Optional<string>  = undefined
-
-  /** Container ref of the Div surrounding the Select Component  */
-  export let container: Optional<HTMLDivElement> = undefined
-
-  /** Input ref of the hidden Input */
-  export let input: Optional<HTMLInputElement> = undefined;
-  
-  /** Enable multi-select */
-    export let multiple = false;
-
-   /** When multiple selected items will clear on click */ 
+  export let id: string | null = null;
+  export let name: string | null = null;
+  export let container: string | null = null;
+  export let input: string | null = undefined;
+  export let multiple = false;
   export let multiFullItemClearable = false;
-
-  /** Disable select */
   export let disabled = false;
-
-  /** Controls input focus */
   export let focused = false;
-
-  /** Selected value(s) */
-  export let value: string | Record<string, unknown> | null = null;
-
-  /** Text to filter items by */
+  export let value = null;
   export let filterText = '';
-
-  /** Placeholder text */
   export let placeholder = 'Please select';
-
-  /** When multiple placeholder text will always show */
   export let placeholderAlwaysShow = false;
-
-  /** Array of items available to display / filter */
-  export let items: string[] | {label: string, value: unknown}[] | {[key: string]: unknown}[] | null = null;
- 
-  /** Override default label thats selected from the items */
-  export let label: string = 'label';
-
-  /** Function to filters the items */
-  export let itemFilter = (label: string, filterText: string, option) => `${label}`.toLowerCase().includes(filterText.toLowerCase());
-  
-  /** Group by groupName: groupValue. Example: {label: "a", value: "a", group: "abc"}, groupBy="group" */
-  export let groupBy: Optional<string> = undefined;
-  
-  /** Function to filter groups */
-  export let groupFilter = (groups: string[]) => groups;
-
-  /** When true, group headers are selectable */
+  export let items = null;
+  export let label = 'label';
+  export let itemFilter = (label, filterText, option) => `${label}`.toLowerCase().includes(filterText.toLowerCase());
+  export let groupBy = undefined;
+  export let groupFilter = (groups) => groups;
   export let groupHeaderSelectable = false;
-
-  /** Override default value identifier */
   export let itemId = 'value';
-
-  /** Function to async load items */
-  export let loadOptions:  Optional<Function> = undefined;
-  
-  /** Add inline styles to container */
+  export let loadOptions = undefined;
   export let containerStyles = '';
-
-  /** If true sets error class and styles */
   export let hasError = false;
   export let filterSelectedItems = true;
   export let required = false;
@@ -104,7 +60,7 @@
   export let loading = false;
   export let listOpen = false;
 
-  let timeout: NodeJS.Timeout
+  let timeout;
   export let debounce = (fn, wait = 1) => {
     clearTimeout(timeout);
     timeout = setTimeout(fn, wait);
@@ -603,7 +559,7 @@
     itemSelected(item);
   }
 
-  function handleHover(i: number) {
+  function handleHover(i) {
     if (isScrolling) return;
     hoverItemIndex = i;
   }
